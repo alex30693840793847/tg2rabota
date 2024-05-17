@@ -1,0 +1,38 @@
+import sqlite3
+
+
+conn = sqlite3.connect('standent13.db')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS "Group" (
+    id INTEGER PRIMARY KEY,
+    name TEXT 
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS Student (
+    id INTEGER PRIMARY KEY,
+    f TEXT,
+    i TEXT,
+    o TEXT,
+    groupid INTEGER,
+    FOREIGN KEY (groupid) REFERENCES "Group"(id)
+)
+''')
+
+cursor.execute('''
+INSERT INTO "Group" (id, name) VALUES
+(1, '215 группе'),
+(2, '217 группе')
+''')
+
+cursor.execute('''
+INSERT INTO Student (id, f, i, o, groupid) VALUES
+(1, 'Конов', 'Алекс', 'Николаевич', 1),
+(2, 'Карпов', 'Максим', 'Дмитриевич', 2)
+''')
+
+conn.commit()
+conn.close()
